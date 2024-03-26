@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
-<h1>Related pages</h1>
-
+<h1>{{ query }}</h1>
+<p>{{ query }} may refer to: </p>
     <ul>
         {% for entry in entries %}
             <li><a href="../wiki/{{ entry }}">{{ entry }}</a></li>

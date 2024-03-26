@@ -45,11 +45,12 @@ def search(request):
                     })
 
     if len(matchCount) >= 2:
-        return render(request, "encyclopedia/search.html",{
-            "entries" : matchCount
+        return render(request, "encyclopedia/matches.html",{
+            "entries" : matchCount,
+            "query" : query
             })
     return render(request, "encyclopedia/entries.html",{
-            "content": Markdown().convert(util.get_entry(query)),
+            "content": Markdown().convert(util.get_entry(matchCount[0])),
             "title" : query
             })
     
