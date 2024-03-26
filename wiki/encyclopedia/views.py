@@ -92,7 +92,16 @@ def create(request):
                     })
     else:
         return render(request, "encyclopedia/new_page.html")
-    
-            
 
+@csrf_exempt
+def edit(request, title):
+    if request.method == "POST":
+        content = request.POST.get("content")
+        util.save_entry(title, content)
+        return redirect("entries", title=title)
+    else:
+        return render(request, "encyclopedia/edit.html",{
+            "content" : util.get_entry(title),
+            "title" : title
+        })
         
