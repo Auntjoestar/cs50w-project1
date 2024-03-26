@@ -76,7 +76,7 @@ def create(request):
                     "status" : status
                     })
         for entry in entries:
-            if title.upper() == entry.upper():
+            if title == entry:
                 exist += 1
         if exist:
             status = "danger"
