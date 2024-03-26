@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from markdown2 import Markdown
+from django.contrib import messages
 from . import util
 
 
@@ -53,7 +55,43 @@ def search(request):
             "content": Markdown().convert(util.get_entry(matchCount[0])),
             "title" : query
             })
-    
+
+@csrf_exempt
+def create(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        entries = util.list_entries()
+        exist = 0
+        if not title:
+            messages.error(request, "A titled must be provided.")
+            status = "danger"
+            return render(request, "encyclopedia/new_page.html", {
+                    "status" : status
+                    })
+        if not content:
+            messages.error(request, "Content must be provided")
+            status = "danger"
+            return render(request, "encyclopedia/new_page.html", {
+                    "status" : status
+                    })
+        for entry in entries:
+            if title.upper() == entry.upper():
+                exist += 1
+        if exist:
+            status = "danger"
+            messages.error(request, "The page you're trying create already exists.")
+            return render(request, "encyclopedia/new_page.html", {
+                    "status" : status
+                    })
+        util.save_entry(title, content)
+        status = "success"
+        messages.success(request, "The page was created successfully.")
+        return render(request, "encyclopedia/new_page.html", {
+                    "status" : status
+                    })
+    else:
+        return render(request, "encyclopedia/new_page.html")
     
             
 

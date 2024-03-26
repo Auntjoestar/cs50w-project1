@@ -1,0 +1,26 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    new page
+{% endblock %}
+
+{% block body %}
+
+
+{% for msg in messages %}
+    <div class="alert alert-{{ status }}" role="alert">
+        {{ msg }} 
+    </div>
+{% endfor %}
+
+<h1>Create a new page</h1>
+<form method="POST" action="{% url 'create' %}">
+    {% csrf_token %}
+    <p>Use the markdown syntax to create a new page:</p>
+    <h2>Title</h2>
+    <input name="title" placeholder="Give a title to your entry..." type="text" id="entryTitle">
+    <h2>Content</h2>
+    <textarea name="content" placeholder="Write your text here..." id="newPage"></textarea>
+    <button type="submit">Upload!</button>
+</form>
+{% endblock %}
