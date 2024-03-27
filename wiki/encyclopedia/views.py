@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from markdown2 import Markdown
 from django.contrib import messages
 from . import util
+import random
 
 
 def index(request):
@@ -105,3 +106,7 @@ def edit(request, title):
             "title" : title
         })
         
+def random_page(request):
+    entries = util.list_entries()
+    randomEntry = random.choice(entries)
+    return redirect("entries", title=randomEntry)
