@@ -6,7 +6,18 @@
 {% endblock %}
 
 {% block body %}
-<img src="{% static 'encyclopedia/error.png' %}">
-<h1>{{ title|safe }}</h1>
-<p>{{ content|safe }}</h1>
+<div class="container container-error">
+    <div class="error-title">
+        <h1>{{ title|safe }}</h1>
+        <hr>
+        <h2>{{ subtitle|safe }}</h2>
+    </div>
+    <div class="error-content">
+        <img src="{% static 'encyclopedia/error.png' %}">
+        <div class="error-text">
+            <p>{{ content|safe }}</h1>
+            <p>{{ subcontent|safe }}</p>
+        </div>
+    </div>
+</div>
 {% endblock %}

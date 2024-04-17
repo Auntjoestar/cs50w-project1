@@ -20,8 +20,10 @@ def entries(request, title):
             })
     else:
         return render(request, "encyclopedia/error.html",{
-            "content": "Error 404: Page Not Found",
-            "title" : "Error 404"
+            "content": "A matching entry was not found, ",
+            "subcontent": "maybe you misspelled something? (・・？)",
+            "title" : "Error 404.",
+            "subtitle": "Page Not Found :((("
             })
     
 def search(request):
@@ -40,8 +42,10 @@ def search(request):
                 filteredEntries.append(entry)
         if len(filteredEntries) == 0: 
             return render(request, "encyclopedia/not_found.html",{
-                    "content": "A matching entry was not found, maybe you misspelled something?",
-                    "title" : "Page Not Found"
+                    "content": "A matching entry was not found, ",
+                    "subcontent": "maybe you misspelled something? (・・？)",
+                    "title" : "Error 404.",
+                    "subtitle": "Page Not Found :((("
                     })
         return render(request, "encyclopedia/search.html",{
                     "entries" : filteredEntries
@@ -88,9 +92,11 @@ def create(request):
         util.save_entry(title, content)
         status = "success"
         messages.success(request, "The page was created successfully.")
-        return render(request, "encyclopedia/new_page.html", {
-                    "status" : status
-                    })
+        return render(request, "encyclopedia/entries.html",{
+            "content": Markdown().convert(util.get_entry(title)),
+            "title" : title,
+            "status" : status
+            })
     else:
         return render(request, "encyclopedia/new_page.html")
 

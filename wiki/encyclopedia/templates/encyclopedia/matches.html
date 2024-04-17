@@ -5,12 +5,13 @@
 {% endblock %}
 
 {% block body %}
+<div class="container">
 <h1>{{ query }}</h1>
 <p>{{ query }} may refer to: </p>
-    <ul>
+    <ul class="found">
         {% for entry in entries %}
             <li><a href="../wiki/{{ entry }}">{{ entry }}</a></li>
         {% endfor %}
     </ul>
-
+</div>
 {% endblock %}
